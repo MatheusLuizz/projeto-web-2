@@ -92,7 +92,13 @@ export default function NavBar(props) {
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
+      <AppBar 
+        position="fixed" 
+        sx={{ 
+          zIndex: (theme) => theme.zIndex.drawer + 1,
+          backgroundColor: '#000A32',
+          color: '#fff'
+       }}>
         <Toolbar>
 
           <IconButton 
@@ -113,7 +119,12 @@ export default function NavBar(props) {
           display: {xs: 'none', sm: 'block'},
           width: drawerWidth,
           flexShrink: 0,
-          [`& .MuiDrawer-paper`]: { width: drawerWidth, boxSizing: 'border-box' },
+          [`& .MuiDrawer-paper`]: { 
+            width: drawerWidth, 
+            boxSizing: 'border-box', 
+            backgroundColor: '#000A32',
+            color: '#fff'
+          },
         }}
       >
         {myDrawer}
