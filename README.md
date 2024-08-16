@@ -30,11 +30,17 @@
 
 # Design Planejado
 
+##
+
+![Telas-1](https://github.com/user-attachments/assets/8fce6ba1-181d-4107-9b83-1eb3e72b6d60)
+
+##
+
 - Tela de Login
 
 ## 
 
-![planejamento de paginas-02](https://github.com/user-attachments/assets/c2a1a167-ec9d-4a2d-ac58-df801b66ec39)
+![Telas-02](https://github.com/user-attachments/assets/6b90af1f-309c-455b-bc42-b747642852a3)
 
 ##
 
@@ -42,7 +48,7 @@
 
 ##
 
-![planejamento de paginas-03](https://github.com/user-attachments/assets/e1c06c73-a0f3-4a8b-87f4-3b4cad9b1d17)
+![Telas-03](https://github.com/user-attachments/assets/2dae057a-e2b9-4a6b-adef-afa635c63383)
 
 ##
 
@@ -50,7 +56,7 @@
 
 ##
 
-![planejamento de paginas-04](https://github.com/user-attachments/assets/38876adc-c8ca-4341-803c-6de99fead487)
+![Telas-04](https://github.com/user-attachments/assets/fef0b11b-3100-48e4-874c-1229ba39b62d)
 
 ##
 
@@ -58,7 +64,7 @@
 
 ##
 
-![planejamento de paginas-05](https://github.com/user-attachments/assets/7c68ad35-1f7b-4bac-b9d2-8039fd510ae2)
+![Telas-05](https://github.com/user-attachments/assets/68900823-71de-4b32-a79e-6452e1090963)
 
 ##
 
@@ -66,7 +72,7 @@
 
 ##
 
-![planejamento de paginas-06](https://github.com/user-attachments/assets/cfc02e92-13a3-43a2-988d-e1ba39f1be70)
+![Telas-06](https://github.com/user-attachments/assets/d4ab68e6-69e5-4cfc-9d07-e1683e6327e9)
 
 ##
 
@@ -74,7 +80,7 @@
 
 ## 
 
-![planejamento de paginas-07](https://github.com/user-attachments/assets/b5345a44-ffb9-4121-b3b5-9ccf0650e169)
+![Telas-07](https://github.com/user-attachments/assets/ccfedfa9-2dc5-47ef-afb1-4402cf4cdd78)
 
 ##
 
@@ -82,7 +88,7 @@
 
 ##
 
-![planejamento de paginas-08](https://github.com/user-attachments/assets/16e2dab3-d60e-471b-a889-0005f07edd42)
+![Telas-08](https://github.com/user-attachments/assets/b01a5106-aa40-4fa2-8943-62ef29265498)
 
 ##
 
