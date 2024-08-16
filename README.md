@@ -1,6 +1,5 @@
 # Gerenciamento Financeiro
 
-##
 
 - Este repositório é dedicado para o desenvolvimento de um projeto web de Gerenciamento Financeiro
 
