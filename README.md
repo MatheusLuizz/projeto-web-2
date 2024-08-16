@@ -27,9 +27,10 @@
 - Autenticação: Django Auth
 - Plataforma de computação em nuvem: Microsoft Azure
 
+##
+
 # Design Planejado
 
-##
 
 ![Telas-1](https://github.com/user-attachments/assets/8fce6ba1-181d-4107-9b83-1eb3e72b6d60)
 
