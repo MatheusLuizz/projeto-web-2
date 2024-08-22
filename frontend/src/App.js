@@ -8,25 +8,28 @@ import NavBar from './components/NavBar';
 import Login from './components/Login';
 import Dashboard from './components/Dashboard';
 import Calendar from './components/Calendar';
+import Footer from './components/Footer';
 
 function App() {
   const myWidth = 200;
   return (
+    
     <div className="App">
       <NavBar 
-          drawerWidth={myWidth}
-          content = {
-            <Routes>
-              <Route path="/home" element={<Home />} />
-              <Route path="/ganhos" element={<Income />} />
-              <Route path="/gastos" element={<Expenses />} />
-              <Route path="/criar" element={<Create />} />
-              <Route path="/calendario" element={<Calendar />} />
-              <Route path="/" element={<Login />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-            </Routes>
-          }
+        drawerWidth={myWidth}
+        content = {
+          <Routes>
+            <Route path="/home" element={<Home />} />
+            <Route path="/ganhos" element={<Income />} />
+            <Route path="/gastos" element={<Expenses />} />
+            <Route path="/criar" element={<Create />} />
+            <Route path="/calendario" element={<Calendar />} />
+            <Route path="/" element={<Login />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+          </Routes>
+        }
       />
+     <Footer/>
     </div>
   );
 }

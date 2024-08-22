@@ -32,62 +32,62 @@ export default function NavBar(props) {
   }
 
   const myDrawer = (
-    <div>
-        <Toolbar />
-        <Box sx={{ overflow: 'auto' }}>
-          <List>
-              <ListItem disablePadding>
-                <ListItemButton component={Link} to="/home" selected={"/home" == path}>
-                  <ListItemIcon>
-                    <HomeIcon />
-                  </ListItemIcon>
-                  <ListItemText primary={"Home"} />
-                </ListItemButton>
-              </ListItem>
-              <ListItem disablePadding>
-                <ListItemButton component={Link} to="/gastos" selected={"/gastos" == path}>
-                  <ListItemIcon>
-                    <MoneyOffIcon />
-                  </ListItemIcon>
-                  <ListItemText primary={"Gastos"} />
-                </ListItemButton>
-              </ListItem>
-              <ListItem disablePadding>
-                <ListItemButton component={Link} to="/ganhos" selected={"/ganhos" == path}>
-                  <ListItemIcon>
-                    <AttachMoneyIcon />
-                  </ListItemIcon>
-                  <ListItemText primary={"Ganhos"} />
-                </ListItemButton>
-              </ListItem>
-              <ListItem disablePadding>
-                <ListItemButton component={Link} to="/criar" selected={"/criar" == path}>
-                  <ListItemIcon>
-                    <AddIcon />
-                  </ListItemIcon>
-                  <ListItemText primary={"Criar"} />
-                </ListItemButton>
-              </ListItem>
-              <ListItem disablePadding>
-                <ListItemButton component={Link} to="/dashboard" selected={"/dashboard" == path}>
-                  <ListItemIcon>
-                    <InsightsIcon />
-                  </ListItemIcon>
-                  <ListItemText primary={"Dashboard"} />
-                </ListItemButton>
-              </ListItem>
-              <ListItem disablePadding>
-                <ListItemButton component={Link} to="/calendario" selected={"/calendario" == path}>
-                  <ListItemIcon>
-                    <CalendarMonthIcon />
-                  </ListItemIcon>
-                  <ListItemText primary={"Calendário"} />
-                </ListItemButton>
-              </ListItem>
-          </List>
-        </Box>
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
+      <Toolbar />
+      <Box sx={{ flex: 1, overflow: 'auto' }}>
+        <List>
+          <ListItem disablePadding>
+            <ListItemButton component={Link} to="/home" selected={"/home" === path}>
+              <ListItemIcon>
+                <HomeIcon />
+              </ListItemIcon>
+              <ListItemText primary={"Home"} />
+            </ListItemButton>
+          </ListItem>
+          <ListItem disablePadding>
+            <ListItemButton component={Link} to="/gastos" selected={"/gastos" === path}>
+              <ListItemIcon>
+                <MoneyOffIcon />
+              </ListItemIcon>
+              <ListItemText primary={"Gastos"} />
+            </ListItemButton>
+          </ListItem>
+          <ListItem disablePadding>
+            <ListItemButton component={Link} to="/ganhos" selected={"/ganhos" === path}>
+              <ListItemIcon>
+                <AttachMoneyIcon />
+              </ListItemIcon>
+              <ListItemText primary={"Ganhos"} />
+            </ListItemButton>
+          </ListItem>
+          <ListItem disablePadding>
+            <ListItemButton component={Link} to="/criar" selected={"/criar" === path}>
+              <ListItemIcon>
+                <AddIcon />
+              </ListItemIcon>
+              <ListItemText primary={"Criar"} />
+            </ListItemButton>
+          </ListItem>
+          <ListItem disablePadding>
+            <ListItemButton component={Link} to="/dashboard" selected={"/dashboard" === path}>
+              <ListItemIcon>
+                <InsightsIcon />
+              </ListItemIcon>
+              <ListItemText primary={"Dashboard"} />
+            </ListItemButton>
+          </ListItem>
+          <ListItem disablePadding>
+            <ListItemButton component={Link} to="/calendario" selected={"/calendario" === path}>
+              <ListItemIcon>
+                <CalendarMonthIcon />
+              </ListItemIcon>
+              <ListItemText primary={"Calendário"} />
+            </ListItemButton>
+          </ListItem>
+        </List>
+      </Box>
     </div>
-  )
+  );
 
   return (
     <Box sx={{ display: 'flex' }}>
