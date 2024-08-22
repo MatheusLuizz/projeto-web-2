@@ -8,10 +8,11 @@ const useStyles = makeStyles(
             color: '#000',
             textAlign: 'center',
             padding: '10px',
-            position: 'fixed',
+            //position: 'fixed',
             left: '0',
             bottom: '0',
             width: '100%',
+            marginTop: 'auto',
             boxSizing: 'border-box'
         }
     })
