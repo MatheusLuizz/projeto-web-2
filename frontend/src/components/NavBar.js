@@ -109,7 +109,7 @@ export default function NavBar(props) {
           </IconButton>
 
           <Typography variant="h6" noWrap component="div">
-            Mudar isso em components/NavBar.js, linha 106
+            Mudar isso em components/NavBar.js, linha 112
           </Typography>
         </Toolbar>
       </AppBar>
