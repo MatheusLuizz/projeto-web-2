@@ -20,14 +20,14 @@ const BarChart = ({ data }) => {
                 labels: data.labels,
                 datasets: [
                     {
-                        label: 'Expenses',
+                        label: 'Gastos',
                         data: data.expenses,
                         backgroundColor: 'rgba(255, 99, 132, 0.2)',
                         borderColor: 'rgba(255, 99, 132, 1)',
                         borderWidth: 1,
                     },
                     {
-                        label: 'Income',
+                        label: 'Ganhos',
                         data: data.income,
                         backgroundColor: 'rgba(75, 192, 192, 0.2)',
                         borderColor: 'rgba(75, 192, 192, 1)',

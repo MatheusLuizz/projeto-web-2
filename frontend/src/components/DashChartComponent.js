@@ -4,18 +4,6 @@ import BarChart from './DashBarChart';
 const AppChart = () => {
     const [chartdata, setChartdata] = useState(null);
 
-    var today = new Date();
-    var labels = [];
-
-    for (let index = 0; index < 7; index++) {
-        var date = new Date();
-        date.setDate(today.getDate() - index);
-        var dd = String(date.getDate()).padStart(2, '0');
-        var mm = String(date.getMonth() + 1).padStart(2, '0'); // January is 0!
-        labels[index] = dd + '/' + mm;
-    }
-
-    console.log(labels);
 
     useEffect(() => {
         fetch('http://localhost:8000/gastos/')
@@ -34,7 +22,7 @@ const AppChart = () => {
                     if (!expensesByDate[date]) {
                         expensesByDate[date] = 0;
                     }
-                    expensesByDate[date] += item.valor; // Assuming 'valor' is the field for expense amount
+                    expensesByDate[date] += item.valor;
                 });
 
                 var today = new Date();
@@ -44,7 +32,7 @@ const AppChart = () => {
                     var date = new Date();
                     date.setDate(today.getDate() - index);
                     var dd = String(date.getDate()).padStart(2, '0');
-                    var mm = String(date.getMonth() + 1).padStart(2, '0'); // January is 0!
+                    var mm = String(date.getMonth() + 1).padStart(2, '0');
                     var dateString = date.toISOString().split('T')[0];
                     labels[index] = dd + '/' + mm;
                     expenses[index] = expensesByDate[dateString] || 0;
