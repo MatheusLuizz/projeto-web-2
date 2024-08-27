@@ -6,13 +6,13 @@ router = DefaultRouter()
 router.register('projects', ProjectViewSet, basename='project')
 
 router2 = DefaultRouter()
-router2.register('users', UserViewSet, basename='users')
+router2.register('users', UserViewSet, basename='user')
 
 router3 = DefaultRouter()
-router3.register('ganhos', GanhoViewSet, basename='ganhos')
+router3.register('ganhos', GanhoViewSet, basename='ganho')
 
 router4 = DefaultRouter()
-router4.register('gastos', GastoViewSet, basename='gastos')
+router4.register('gastos', GastoViewSet, basename='gasto')
 urlpatterns = [ 
     
     path('', include(router.urls)),
