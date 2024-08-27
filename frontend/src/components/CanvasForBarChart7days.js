@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { Chart } from 'chart.js/auto';
 
-const BarChart = ({ data }) => {
+const BarChart7days = ({ data }) => {
     const chartRef = useRef(null);
     const chartInstanceRef = useRef(null);
 
@@ -48,4 +48,4 @@ const BarChart = ({ data }) => {
     return <canvas ref={chartRef}></canvas>;
 };
 
-export default BarChart;
+export default BarChart7days;
