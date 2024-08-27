@@ -1,9 +1,13 @@
-import React from 'react'
+import AppChart from './DashChartComponent';
 
-const Dashboard = () => {
-  return (
-    <div>Dashboard</div>
-  )
-}
+const App = () => {
+   
+    return (
+        <div>
+            <h1>Check the console for data</h1>
+            <AppChart />
+        </div>
+    );
+};
 
-export default Dashboard
+export default App;
