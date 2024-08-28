@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import BarChart7days from './CanvasForBarChart7days';
 import BarChart7months from './CanvasForBarChart7months';
 import BarChart3years from './CanvasForBarChart3years';
+import TopExpenses from './BarChartTopExpenses';
 const AppChart = () => {
     const [chartdata7Days, setChartdata7Days] = useState(null);
     const [chartdata7Months, setChartdata7Months] = useState(null);
@@ -240,6 +241,9 @@ const AppChart = () => {
             {chartdata7Months && <BarChart7months data={chartdata7Months} />}
             <h5>Receitas e Despesas dos Últimos 3 Anos</h5>
             {chartdata3years && <BarChart3years data={chartdata3years} />}
+            
+            <TopExpenses></TopExpenses>
+            
         </div>
     );
 };
