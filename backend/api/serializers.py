@@ -18,3 +18,17 @@ class UserSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user = CustomUser.objects.create_user(**validated_data)
         return user
+class UsuarioSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Usuario
+        fields = ('cpf', 'nome', 'email', 'telefone', 'faturamento', 'criacao_conta')
+
+class GanhoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Ganho
+        fields = ('cliente_cpf', 'nome_atividade', 'tipo_atividade', 'valor', 'data', 'descricao', 'recorrencia')
+
+class GastoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Gasto
+        fields = ('cliente_cpf', 'nome_atividade', 'tipo_atividade', 'valor', 'data', 'descricao')
