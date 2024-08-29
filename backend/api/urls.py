@@ -15,12 +15,17 @@ urlpatterns = router.urls
 
 # --------------------
 
+from .views import login_usuario
 
 urlpatterns = [
-    path('api/register/', register_view, name='register'),
-    path('api/login/', login_view, name='login'),
-    
+    path('api/login/', login_usuario, name='login_usuario'),
 ]
 
+# ---------------
 
+from .views import register_usuario
+
+urlpatterns = [
+    path('api/register/', register_usuario, name='register_usuario'),
+]
 

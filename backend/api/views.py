@@ -1,21 +1,23 @@
 from rest_framework.decorators import api_view
 from rest_framework import status
 from django.contrib.auth.models import User
-# from django.shortcuts import render
+from django.shortcuts import render
 from django.http import HttpResponse
 from rest_framework import viewsets, permissions
 from .models import *
 from .serializers import *
 from rest_framework.response import Response
 from django.contrib.auth import authenticate
-# from django.http import JsonResponse
-# from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate
 from rest_framework import generics
-from .models import CustomUser
+from .models import CustomUser, Usuario
 from .serializers import UserSerializer
 from rest_framework.exceptions import ValidationError
 from rest_framework.serializers import Serializer, CharField, EmailField
+from rest_framework.decorators import api_view
+
 
 
 def home(request):
@@ -69,50 +71,35 @@ class RegisterUserView(generics.CreateAPIView):
 
 # ----------------------
 
+
 @api_view(['POST'])
-def login_view(request):
+def login_usuario(request):
     username = request.data.get('username')
     password = request.data.get('password')
 
-    user = authenticate(username=username, password=password)
+    try:
+        usuario = Usuario.objects.get(cpf=username) if username.isdigit() else Usuario.objects.get(email=username)
+        
+        if usuario.password == password:  # Verifique a senha com o método adequado
+            return Response({"success": True, "message": "Login realizado com sucesso!"}, status=status.HTTP_200_OK)
+        else:
+            return Response({"success": False, "message": "CPF/Email ou senha incorretos"}, status=status.HTTP_401_UNAUTHORIZED)
+    except Usuario.DoesNotExist:
+        return Response({"success": False, "message": "Usuário não encontrado"}, status=status.HTTP_404_NOT_FOUND)
 
-    if user is not None:
-     
-        return Response({'success': True, 'message': 'Login successful'})
-    else:
-   
-        return Response({'success': False, 'message': 'Invalid credentials'}, status=400)
-    
 
-    # ______________
-
-class RegisterSerializer(Serializer):
-    username = CharField(required=True, max_length=150)
-    email = EmailField(required=True)
-    password = CharField(required=True, max_length=128)
-
-    def validate(self, data):
-        # Verificar se o nome de usuário já existe
-        if User.objects.filter(username=data['username']).exists():
-            raise ValidationError("Username already exists")
-        return data
-
-    def create(self, validated_data):
-        # Criação do usuário
-        user = User.objects.create_user(
-            username=validated_data['username'],
-            email=validated_data['email'],
-            password=validated_data['password']
-        )
-        return user
+# -------------------
 
 @api_view(['POST'])
-def register_view(request):
-    serializer = RegisterSerializer(data=request.data)
+def register_usuario(request):
+    confirm_email = request.data.get('confirm_email')
+    confirm_password = request.data.get('confirm_password')
 
+    serializer = UsuarioSerializer(data=request.data, context={'confirm_email': confirm_email, 'confirm_password': confirm_password})
     if serializer.is_valid():
         serializer.save()
-        return Response({'success': True, 'message': 'User registered successfully'})
+        return Response({"success": True, "message": "Usuário registrado com sucesso!"}, status=status.HTTP_201_CREATED)
     else:
-        return Response({'success': False, 'message': serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({"success": False, "errors": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+
 

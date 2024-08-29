@@ -8,13 +8,26 @@ class ProjectSerializer(serializers.ModelSerializer):
 
 
         # ----------------------
-
-class UserSerializer(serializers.ModelSerializer):
+class UsuarioSerializer(serializers.ModelSerializer):
     class Meta:
-        model = CustomUser
-        fields = ['id', 'username', 'email', 'password']
-        extra_kwargs = {'password': {'write_only': True}}
+        model = Usuario
+        fields = ['cpf', 'nome', 'email', 'telefone', 'faturamento', 'criacao_conta','password']
 
-    def create(self, validated_data):
-        user = CustomUser.objects.create_user(**validated_data)
-        return user
+
+        # _______________
+
+    def validate(self, data):
+        # Validar email
+        email = data.get('email')
+        confirm_email = self.context.get('confirm_email')
+        if email != confirm_email:
+            raise serializers.ValidationError("Os e-mails não coincidem.")
+
+        # Validar senha
+        password = data.get('password')
+        confirm_password = self.context.get('confirm_password')
+        if password != confirm_password:
+            raise serializers.ValidationError("As senhas não coincidem.")
+
+        return data
+
