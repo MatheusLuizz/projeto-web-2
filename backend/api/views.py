@@ -16,10 +16,55 @@ from .models import CustomUser
 from .serializers import UserSerializer
 from rest_framework.exceptions import ValidationError
 from rest_framework.serializers import Serializer, CharField, EmailField
+from datetime import datetime, timedelta
+from django.http import JsonResponse
+from django.views.decorators.http import require_GET
+from django.db.models import Sum, Min
 
 
 def home(request):
     return HttpResponse('Página Home')
+
+@require_GET
+def user_summary(request):
+    user_id = request.GET.get('user_id', '55555555555')  
+    try:
+        user = Usuario.objects.get(pk=user_id)
+    except Usuario.DoesNotExist:
+        return JsonResponse({'error': 'User not found'}, status=404)
+
+    period = request.GET.get('period', 'week')
+    today = datetime.now().date()
+
+    if period == 'week':
+        start_date = today - timedelta(days=7)
+    elif period == 'month':
+        start_date = today - timedelta(days=30)
+    elif period == 'all':
+        start_date = Usuario.objects.aggregate(Min('criacao_conta'))['criacao_conta__min']
+        if not start_date:
+            start_date = today
+    else:
+        return JsonResponse({'error': 'Invalid period'}, status=400)
+
+    ganhos = Ganho.objects.filter(cliente_cpf=user, data__gte=start_date)
+    gastos = Gasto.objects.filter(cliente_cpf=user, data__gte=start_date)
+
+    total_ganhos = ganhos.aggregate(total=Sum('valor'))['total'] or 0
+    total_gastos = gastos.aggregate(total=Sum('valor'))['total'] or 0
+
+    saldo = total_ganhos - total_gastos
+
+    transactions = list(gastos.values('nome_atividade', 'valor', 'data').order_by('-data')[:10])
+
+    data = {
+        'revenue': total_ganhos,
+        'expenses': total_gastos,
+        'balance': saldo,
+        'transactions': transactions
+    }
+
+    return JsonResponse(data)
 
 
 class ProjectViewSet(viewsets.ViewSet):

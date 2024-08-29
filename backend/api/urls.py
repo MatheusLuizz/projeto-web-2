@@ -20,7 +20,8 @@ urlpatterns = [
     path('', include(router.urls)),
     path('', include(router2.urls)),
     path('', include(router3.urls)),
-    path('', include(router4.urls))
+    path('', include(router4.urls)),
+    path('api/users/summary/', user_summary, name='user_summary'),
     ]
 
 #urlpatterns = [
