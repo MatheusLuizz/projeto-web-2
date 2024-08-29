@@ -1,19 +1,27 @@
-import './App.css';
-import { Routes, Route } from 'react-router-dom';
-import Home from './components/Home';
-import Income from './components/Income';
-import Expenses from './components/Expenses';
-import Create from './components/Create';
-import NavBar from './components/NavBar';
-import Login from './components/Login';
-import Dashboard from './components/Dashboard';
-import Calendar from './components/Calendar';
-import Footer from './components/Footer';
+import "./App.css";
+import React, { useState } from "react";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+import HomePage from "./components/HomePage";
+import Home from "./components/Home";
+import Income from "./components/Income";
+import Expenses from "./components/Expenses";
+import Create from "./components/Create";
+import NavBar from "./components/NavBar";
+import Dashboard from "./components/Dashboard";
+import Calendar from "./components/Calendar";
+import Footer from "./components/Footer";
+import Header from "./components/Header";
 
 function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const myWidth = 200;
+  const location = useLocation(); 
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+  };
+
   return (
-    
     <div className="App">
       {location.pathname === "/" && <Header />}
 
