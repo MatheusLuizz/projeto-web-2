@@ -116,16 +116,8 @@ def register_view(request):
         return Response({'success': True, 'message': 'User registered successfully'})
     else:
         return Response({'success': False, 'message': serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
-class UserViewSet(viewsets.ViewSet):
-# -----------------------
 
 
-class RegisterUserView(generics.CreateAPIView):
-    queryset = CustomUser.objects.all()
-    serializer_class = UserSerializer
-
-
-# ----------------------
 
 @api_view(['POST'])
 def login_view(request):
@@ -174,6 +166,7 @@ def register_view(request):
     else:
         return Response({'success': False, 'message': serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
+class UserViewSet(viewsets.ViewSet):
     permission_classes = [permissions.AllowAny] 
     queryset = Usuario.objects.all()
     serializer_class = UsuarioSerializer
