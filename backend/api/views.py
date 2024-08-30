@@ -18,6 +18,7 @@ from rest_framework.exceptions import ValidationError
 from rest_framework.serializers import Serializer, CharField, EmailField
 
 
+
 def home(request):
     return HttpResponse('Página Home')
 
@@ -59,6 +60,121 @@ class ProjectViewSet(viewsets.ViewSet):
         project.delete()
         return Response(status=204)
 
+class UserViewSet(viewsets.ViewSet):
+
+    permission_classes = [permissions.AllowAny] 
+    queryset = Usuario.objects.all()
+    serializer_class = UsuarioSerializer
+    
+    def list(self, request):
+        queryset = self.queryset
+        serializer = self.serializer_class(queryset, many=True)
+        return Response(serializer.data)
+    
+    def create(self, request):
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        else:
+            return Response(serializer.errors, status=400)    
+    
+    def retrieve(self, request, pk=None):
+        project = self.queryset.get(pk=pk)
+        serializer = self.serializer_class(project)
+        return Response(serializer.data)
+    
+    def update(self, request, pk=None):
+        project = self.queryset.get(pk=pk)
+        serializer = self.serializer_class(project, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        else:
+            return Response(serializer.errors, status=400)
+    
+    def destroy(self, request, pk=None):
+        project = self.queryset.get(pk=pk)
+        project.delete()
+        return Response(status=204)
+    
+class GanhoViewSet(viewsets.ViewSet):
+
+    permission_classes = [permissions.AllowAny] 
+    queryset = Ganho.objects.all()
+    serializer_class = GanhoSerializer
+    
+    def list(self, request):
+        queryset = self.queryset
+        serializer = self.serializer_class(queryset, many=True)
+        return Response(serializer.data)
+    
+    def create(self, request):
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        else:
+            return Response(serializer.errors, status=400)    
+    
+    def retrieve(self, request, pk=None):
+        project = self.queryset.get(pk=pk)
+        serializer = self.serializer_class(project)
+        return Response(serializer.data)
+    
+    def update(self, request, pk=None):
+        project = self.queryset.get(pk=pk)
+        serializer = self.serializer_class(project, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        else:
+            return Response(serializer.errors, status=400)
+    
+    def destroy(self, request, pk=None):
+        project = self.queryset.get(pk=pk)
+        project.delete()
+        return Response(status=204)
+
+class GastoViewSet(viewsets.ViewSet):
+
+    permission_classes = [permissions.AllowAny] 
+    queryset = Gasto.objects.all()
+    serializer_class = GastoSerializer
+    
+    def list(self, request):
+        queryset = self.queryset
+        serializer = self.serializer_class(queryset, many=True)
+        return Response(serializer.data)
+    
+    def create(self, request):
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        else:
+            return Response(serializer.errors, status=400)    
+    
+    def retrieve(self, request, pk=None):
+        project = self.queryset.get(pk=pk)
+        serializer = self.serializer_class(project)
+        return Response(serializer.data)
+    
+    def update(self, request, pk=None):
+        project = self.queryset.get(pk=pk)
+        serializer = self.serializer_class(project, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        else:
+            return Response(serializer.errors, status=400)
+    
+    def destroy(self, request, pk=None):
+        project = self.queryset.get(pk=pk)
+        project.delete()
+        return Response(status=204)
+    
+    
 # -----------------------
 
 
@@ -115,4 +231,3 @@ def register_view(request):
         return Response({'success': True, 'message': 'User registered successfully'})
     else:
         return Response({'success': False, 'message': serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
-
