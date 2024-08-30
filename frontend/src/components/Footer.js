@@ -7,7 +7,6 @@ const useStyles = makeStyles((theme) => ({
     color: "#000a32",
     textAlign: "center",
     padding: "10px",
-    // position: 'fixed',
     left: "0",
     bottom: "0",
     width: "100%",
