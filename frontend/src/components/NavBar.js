@@ -1,85 +1,117 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Drawer from '@mui/material/Drawer';
-import AppBar from '@mui/material/AppBar';
-import CssBaseline from '@mui/material/CssBaseline';
-import Toolbar from '@mui/material/Toolbar';
-import List from '@mui/material/List';
-import { Link, useLocation } from 'react-router-dom'
-import Typography from '@mui/material/Typography';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import HomeIcon from '@mui/icons-material/Home';
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
-import MoneyOffIcon from '@mui/icons-material/MoneyOff';
-import AddIcon from '@mui/icons-material/Add';
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import InsightsIcon from '@mui/icons-material/Insights';
-import MenuIcon from '@mui/icons-material/Menu';
-import { IconButton } from '@mui/material';
+import React from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import {
+  AppBar,
+  Toolbar,
+  IconButton,
+  Typography,
+  Drawer,
+  Box,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  CssBaseline,
+} from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
+import HomeIcon from "@mui/icons-material/Home";
+import MoneyOffIcon from "@mui/icons-material/MoneyOff";
+import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
+import AddIcon from "@mui/icons-material/Add";
+import InsightsIcon from "@mui/icons-material/Insights";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 
 export default function NavBar(props) {
-  const { drawerWidth, content } = props
-  const location = useLocation()
-  const path = location.pathname
+  const { drawerWidth, content, onLogout } = props; // Recebe a função de logout como prop
+  const location = useLocation();
+  const path = location.pathname;
+  const navigate = useNavigate(); // Para redirecionamento após logout
 
   const [open, setOpen] = React.useState(false);
 
   const changeOpenStatus = () => {
-    setOpen(!open)
-  }
+    setOpen(!open);
+  };
+
+  const handleLogout = () => {
+    onLogout(); // Chama a função de logout
+    navigate("/"); // Redireciona para a HomePage após deslogar
+  };
 
   const myDrawer = (
-    <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
+    <div style={{ display: "flex", flexDirection: "column", height: "100vh" }}>
       <Toolbar />
-      <Box sx={{ flex: 1, overflow: 'auto' }}>
+      <Box sx={{ flex: 1, overflow: "auto" }}>
         <List>
           <ListItem disablePadding>
-            <ListItemButton component={Link} to="/home" selected={"/home" === path}>
+            <ListItemButton
+              component={Link}
+              to="/home"
+              selected={"/home" === path}
+            >
               <ListItemIcon>
-                <HomeIcon />
+                <HomeIcon style={{ color: "white" }} />
               </ListItemIcon>
               <ListItemText primary={"Home"} />
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton component={Link} to="/gastos" selected={"/gastos" === path}>
+            <ListItemButton
+              component={Link}
+              to="/gastos"
+              selected={"/gastos" === path}
+            >
               <ListItemIcon>
-                <MoneyOffIcon />
+                <MoneyOffIcon style={{ color: "white" }} />
               </ListItemIcon>
               <ListItemText primary={"Gastos"} />
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton component={Link} to="/ganhos" selected={"/ganhos" === path}>
+            <ListItemButton
+              component={Link}
+              to="/ganhos"
+              selected={"/ganhos" === path}
+            >
               <ListItemIcon>
-                <AttachMoneyIcon />
+                <AttachMoneyIcon style={{ color: "white" }} />
               </ListItemIcon>
               <ListItemText primary={"Ganhos"} />
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton component={Link} to="/criar" selected={"/criar" === path}>
+            <ListItemButton
+              component={Link}
+              to="/criar"
+              selected={"/criar" === path}
+            >
               <ListItemIcon>
-                <AddIcon />
+                <AddIcon style={{ color: "white" }} />
               </ListItemIcon>
               <ListItemText primary={"Criar"} />
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton component={Link} to="/dashboard" selected={"/dashboard" === path}>
+            <ListItemButton
+              component={Link}
+              to="/dashboard"
+              selected={"/dashboard" === path}
+            >
               <ListItemIcon>
-                <InsightsIcon />
+                <InsightsIcon style={{ color: "white" }} />
               </ListItemIcon>
               <ListItemText primary={"Dashboard"} />
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton component={Link} to="/calendario" selected={"/calendario" === path}>
+            <ListItemButton
+              component={Link}
+              to="/calendario"
+              selected={"/calendario" === path}
+            >
               <ListItemIcon>
-                <CalendarMonthIcon />
+                <CalendarMonthIcon style={{ color: "white" }} />
               </ListItemIcon>
               <ListItemText primary={"Calendário"} />
             </ListItemButton>
@@ -90,40 +122,57 @@ export default function NavBar(props) {
   );
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      <AppBar 
-        position="fixed" 
-        sx={{ 
+      <AppBar
+        position="fixed"
+        sx={{
           zIndex: (theme) => theme.zIndex.drawer + 1,
-          backgroundColor: '#000A32',
-          color: '#fff'
-       }}>
+          backgroundColor: "#000A32",
+          color: "#fff",
+        }}
+      >
         <Toolbar>
-
-          <IconButton 
-            color = "inheret"
+          <IconButton
+            color="inherit"
             onClick={changeOpenStatus}
-            sx = {{mr:2,display:{sm:"none"}}}>
+            sx={{ mr: 2, display: { sm: "none" } }}
+          >
             <MenuIcon />
           </IconButton>
 
-          <Typography variant="h6" noWrap component="div">
-            Mudar isso em components/NavBar.js, linha 112
+          <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
+            <img
+              src="./logo-plan-header.png"
+              alt="Logo"
+              style={{ height: 40}}
+            />
           </Typography>
+          <button
+            onClick={handleLogout}
+            style={{
+              color: "white",
+              backgroundColor: "transparent",
+              border: "none",
+              cursor: "pointer",
+            }}
+          >
+            Deslogar
+          </button>
         </Toolbar>
       </AppBar>
+
       <Drawer
         variant="permanent"
         sx={{
-          display: {xs: 'none', sm: 'block'},
+          display: { xs: "none", sm: "block" },
           width: drawerWidth,
           flexShrink: 0,
-          [`& .MuiDrawer-paper`]: { 
-            width: drawerWidth, 
-            boxSizing: 'border-box', 
-            backgroundColor: '#000A32',
-            color: '#fff'
+          [`& .MuiDrawer-paper`]: {
+            width: drawerWidth,
+            boxSizing: "border-box",
+            backgroundColor: "#000A32",
+            color: "#fff",
           },
         }}
       >
@@ -134,10 +183,13 @@ export default function NavBar(props) {
         open={open}
         onClose={changeOpenStatus}
         sx={{
-          display: {xs: 'block', sm: 'none'},
+          display: { xs: "block", sm: "none" },
           width: drawerWidth,
           flexShrink: 0,
-          [`& .MuiDrawer-paper`]: { width: drawerWidth, boxSizing: 'border-box' },
+          [`& .MuiDrawer-paper`]: {
+            width: drawerWidth,
+            boxSizing: "border-box",
+          },
         }}
       >
         {myDrawer}
@@ -145,9 +197,9 @@ export default function NavBar(props) {
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <Toolbar />
 
-          {content}
-
+        {content}
       </Box>
     </Box>
   );
 }
+
