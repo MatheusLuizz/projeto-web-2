@@ -22,6 +22,8 @@ urlpatterns = [
     path('', include(router3.urls)),
     path('', include(router4.urls)),
     path('api/users/summary/', user_summary, name='user_summary'),
+    path('api/register/', register_view, name='register'),
+    path('api/login/', login_view, name='login')
     ]
 
 #urlpatterns = [
@@ -30,13 +32,6 @@ urlpatterns = [
 #]
 
 # --------------------
-
-
-urlpatterns = [
-    path('api/register/', register_view, name='register'),
-    path('api/login/', login_view, name='login'),
-    
-]
 
 
 
