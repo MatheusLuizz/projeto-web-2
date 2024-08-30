@@ -22,7 +22,7 @@ urlpatterns = [
     path('', include(router3.urls)),
     path('', include(router4.urls)),
     path('api/register/', register_view, name='register'),
-    path('api/login/', login_view, name='login'),
+    path('api/login/', login_view, name='login')
     ]
 
 #urlpatterns = [
@@ -31,5 +31,6 @@ urlpatterns = [
 #]
 
 # --------------------
+
 
 
