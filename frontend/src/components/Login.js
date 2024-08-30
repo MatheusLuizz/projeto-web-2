@@ -2,12 +2,23 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function Login({ onLogin }) {
-  const [username, setUsername] = useState("");
+  const [username, setUsername] = useState(""); // Pode ser CPF ou email
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
+  const ADMIN_USERNAME = "admin";
+  const ADMIN_PASSWORD = "123";
+
   const handleLogin = async () => {
     try {
+      // Verificação para usuário admin
+      if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
+        onLogin();
+        navigate("/home");
+        return;
+      }
+
+      // Tentativa de autenticação normal
       const response = await fetch("http://localhost:8000/api/login/", {
         method: "POST",
         headers: {
@@ -25,7 +36,7 @@ function Login({ onLogin }) {
         onLogin(); 
         navigate("/home"); 
       } else {
-        alert("Usuário ou senha incorretos");
+        alert("CPF/Email ou senha incorretos");
       }
     } catch (error) {
       console.error("Erro durante o login:", error);
@@ -40,7 +51,7 @@ function Login({ onLogin }) {
         type="text"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
-        placeholder="Usuário"
+        placeholder="CPF ou Email"
       />
       <input
         type="password"
@@ -54,4 +65,3 @@ function Login({ onLogin }) {
 }
 
 export default Login;
-
