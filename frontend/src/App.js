@@ -23,14 +23,13 @@ function App() {
 
   return (
     <div className="App">
-    { location.pathname === "/" && <Header /> }
+  {location.pathname === "/" && <Header />}
 
-      {
-    isAuthenticated && (
+  {isAuthenticated ? (
+    <>
       <NavBar
         drawerWidth={myWidth}
         onLogout={handleLogout}
-
         content={
           <Routes>
             <Route path="/home" element={<Home />} />
@@ -42,54 +41,21 @@ function App() {
           </Routes>
         }
       />
-    )
-  }
+    
+    </>
+  ) : (
+    <Routes>
+      <Route
+        path="/"
+        element={<HomePage onLogin={() => setIsAuthenticated(true)} />}
+      />
+      <Route path="*" element={<Navigate to="/" />} />
+    </Routes>
+  )}
 
-
-      <Routes>
-
-        <Route
-          path="/"
-          element={<HomePage onLogin={() => setIsAuthenticated(true)} />}
-        />
- 
-        <Route
-          path="/home"
-          element={isAuthenticated ? <Home /> : <Navigate to="/" />}
-        />
-        <Route
-          path="/ganhos"
-          element={isAuthenticated ? <Income /> : <Navigate to="/" />}
-        />
-        <Route
-          path="/gastos"
-          element={isAuthenticated ? <Expenses /> : <Navigate to="/" />}
-        />
-        <Route
-          path="/criar"
-          element={isAuthenticated ? <Create /> : <Navigate to="/" />}
-        />
-        <Route
-          path="/calendario"
-          element={isAuthenticated ? <Calendar /> : <Navigate to="/" />}
-        />
-        <Route
-          path="/dashboard"
-          element={isAuthenticated ? <Dashboard /> : <Navigate to="/" />}
-        />
-
-        <Route
-          path="*"
-          element={
-            isAuthenticated ? <Navigate to="/home" /> : <Navigate to="/" />
-          }
-        />
-      </Routes>
-
-      <Footer />
-    </div >
+  <Footer />
+</div>
   );
 }
 
 export default App;
-
