@@ -1,12 +1,14 @@
 import React from "react";
-import { AppBar, Toolbar, Typography, Button, Box } from "@mui/material";
-import { Link } from "react-router-dom";
-import Register from "./Register";
-import Login from "./Login";
-import Who from "./Who";
-import Features from "./Features";
+import { AppBar, Toolbar, Button, Box } from "@mui/material";
 
 function Header() {
+  const handleScroll = (id) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <AppBar position="static" sx={{ backgroundColor: "#000A32" }}>
       <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -18,8 +20,7 @@ function Header() {
         <Box sx={{ display: 'flex', gap: 2 }}>
           <Button
             color="inherit"
-            component={Link}
-            to="/sobre"
+            onClick={() => handleScroll('features')}
             sx={{
               "&:hover": {
                 color: "#00C75A", 
@@ -31,8 +32,7 @@ function Header() {
           </Button>
           <Button
             color="inherit"
-            component={Link}
-            to="/login"
+            onClick={() => handleScroll('login')}
             sx={{
               "&:hover": {
                 color: "#00C75A",
@@ -44,8 +44,7 @@ function Header() {
           </Button>
           <Button
             color="inherit"
-            component={Link}
-            to="/register"
+            onClick={() => handleScroll('register')}
             sx={{
               "&:hover": {
                 color: "#00C75A",
@@ -57,8 +56,7 @@ function Header() {
           </Button>
           <Button
             color="inherit"
-            component={Link}
-            to="/quemSomos"
+            onClick={() => handleScroll('who')}
             sx={{
               "&:hover": {
                 color: "#00C75A",
@@ -75,5 +73,6 @@ function Header() {
 }
 
 export default Header;
+
 
 

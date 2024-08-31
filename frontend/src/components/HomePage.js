@@ -17,18 +17,7 @@ function HomePage({ onLogin }) {
     maxWidth: "1000px", 
     display: "flex",
     justifyContent: "center", 
-  };
-
-  const cardImageStyle = {
-    width: "100%",
-    height: "auto",
-    position: "absolute",
-    top: 0,
-    left: 0,
-    zIndex: -1,
-    objectFit: "cover",
-    objectPosition: "left center",
-  };
+    };
 
   const cardContentStyle = {
     padding: "20px",
@@ -45,45 +34,50 @@ function HomePage({ onLogin }) {
     flexDirection: "row",
     gap: "20px",
     justifyContent: "center",
-    alignItems: "center",  
+    alignItems: "center",
   };
 
   const loginStyle = {
     width: "40%", 
     maxWidth: "400px", 
     marginRight: "20px",
-    marginRight: "20px", 
+    display: "flex",
+    alignItems: "center", 
   };
 
   const registerStyle = {
     width: "60%", 
     maxWidth: "600px", 
     marginLeft: "20px",
-    marginRight: "20px",
-  }
+    display: "flex",
+    alignItems: "center", 
+  };
 
   return (
     <div>
       <div>
         <MainBanner />
       </div>
-      <div>
+
+      <div id="features">
         <Features />
       </div>
+
       <div style={cardContainerStyle}>
-        <img src="./imagLogin.png" alt="Card Background" style={cardImageStyle} />
         <div style={cardContentStyle}>
           <div style={cardInnerContainerStyle}>
-            <div style={loginStyle}>
+            <div id="login" style={loginStyle}>
               <Login onLogin={onLogin} />
             </div>
-            <div style={registerStyle}>
+
+            <div id="register" style={registerStyle}>
               <Register />
             </div>
           </div>
         </div>
       </div>
-      <div>
+
+      <div id="who">
         <Who />
       </div>
     </div>
@@ -91,7 +85,6 @@ function HomePage({ onLogin }) {
 }
 
 export default HomePage;
-
 
 
 
