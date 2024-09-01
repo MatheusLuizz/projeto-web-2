@@ -2,6 +2,7 @@ from rest_framework.decorators import api_view
 from rest_framework import status
 from django.contrib.auth.models import User
 # from django.shortcuts import render
+from rest_framework.permissions import IsAuthenticated
 from django.http import HttpResponse
 from rest_framework import viewsets, permissions
 from .models import *
@@ -276,3 +277,19 @@ def register_view(request):
         return Response({'success': True, 'message': 'User registered successfully'})
     else:
         return Response({'success': False, 'message': serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+
+class calendarListView(viewsets.ViewSet):
+    def get(self, request, cpf):
+        ganhos = Ganho.objects.filter(cliente_cpf=cpf)
+        gastos = Gasto.objects.filter(cliente_cpf=cpf)
+       
+        ganho_serializer = CalendarGanhoSerializer(ganhos, many=True)
+        gasto_serializer = CalendarGastoSerializer(gastos, many=True)
+
+        data = {
+            'ganhos': ganho_serializer.data,
+            'gastos': gasto_serializer.data
+        }
+
+        return Response(data)
+    

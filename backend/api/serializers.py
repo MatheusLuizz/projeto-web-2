@@ -35,3 +35,13 @@ class GastoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Gasto
         fields = ('cliente_cpf', 'nome_atividade', 'tipo_atividade', 'valor', 'data', 'descricao')
+
+class CalendarGanhoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Ganho
+        fields = ['nome_atividade', 'tipo_atividade', 'valor', 'data', 'descricao', 'recorrencia']
+
+class CalendarGastoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Gasto
+        fields = ['nome_atividade', 'tipo_atividade', 'valor', 'data', 'descricao']
