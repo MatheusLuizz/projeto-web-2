@@ -6,6 +6,13 @@ const Calendar = () => {
   const [despesas, setDespesas] = useState(0);
   const [selectedRow, setSelectedRow] = useState(null);
 
+  const formatarData = (dataISO) => {
+    const data = new Date(dataISO);
+    const timezoneOffset = data.getTimezoneOffset() * 60000;
+    const dataAjustada = new Date(data.getTime() + timezoneOffset);
+    return dataAjustada.toLocaleDateString('pt-BR');
+  };
+
   useEffect(() => {
     const storedCpf = localStorage.getItem("authenticatedUser");
     fetch(`http://localhost:8000/calendario/${storedCpf}/`)
@@ -91,7 +98,7 @@ const Calendar = () => {
           <tbody>
             {transacoes.map((transacao, index) => (
               <tr key={index} className={index === selectedRow ? 'selected' : ''}>
-               <td>{new Date(transacao.data).toLocaleDateString('pt-BR')}</td>
+               <td>{formatarData(transacao.data)}</td>
                 <td>{transacao.nome_atividade}</td>
                 <td>{transacao.descricao}</td>
                 <td>{parseFloat(transacao.valor).toFixed(2).replace('.', ',')}</td>
