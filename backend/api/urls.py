@@ -19,7 +19,7 @@ urlpatterns = [
     path('', include(router4.urls)),
     path('calendario/<str:cpf>/', calendarListView.as_view({'get': 'get'}), name='calendar-list'),
     path('calendario/excluir/', TransacaoViewSet.as_view({'post': 'excluir'}), name='excluir'),
-    path('api/users/summary/', user_summary, name='user_summary'),
+    path('user-summary/<str:cpf>/', user_summary, name='user-summary'),
      path('api/register/', register, name='register'),
     path('api/login/', login_view, name='login'),
     

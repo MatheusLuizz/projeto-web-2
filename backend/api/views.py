@@ -14,6 +14,7 @@ from rest_framework.response import Response
 from django.contrib.auth import authenticate
 # from django.http import JsonResponse
 # from django.views.decorators.csrf import csrf_exempt
+from django.shortcuts import get_object_or_404
 from django.contrib.auth import authenticate
 from rest_framework import generics
 from .models import CustomUser
@@ -31,12 +32,8 @@ def home(request):
     return HttpResponse('Página Home')
 
 @require_GET
-def user_summary(request):
-    user_id = request.GET.get('user_id', '55555555555')  
-    try:
-        user = Usuario.objects.get(pk=user_id)
-    except Usuario.DoesNotExist:
-        return JsonResponse({'error': 'User not found'}, status=404)
+def user_summary(request, cpf):
+    user = get_object_or_404(Usuario, cpf=cpf)
 
     period = request.GET.get('period', 'week')
     today = datetime.now().date()
