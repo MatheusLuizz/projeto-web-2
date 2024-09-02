@@ -25,8 +25,8 @@ const Calendar = () => {
   const handleDelete = (index) => {
     const transacaoParaDeletar = transacoes[index];
   
-    fetch(`http://localhost:8000/calendario/excluir/`, {
-      method: 'POST', // Certifique-se de que o método está em maiúsculas
+    fetch(`http://localhost:8000/calendar/excluir/`, {
+      method: 'POST', 
       headers: {
         'Content-Type': 'application/json',
       },

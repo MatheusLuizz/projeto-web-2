@@ -207,15 +207,15 @@ def register(request):
     if serializer.is_valid():
         data = serializer.validated_data
 
-        # Validar senha
+       
         if data['password'] != data['confirm_password']:
             return Response({'success': False, 'errors': {'confirm_password': "As senhas não coincidem."}}, status=status.HTTP_400_BAD_REQUEST)
 
-        # Verificar se o CPF já está em uso
+       
         if User.objects.filter(username=data['cpf']).exists():
             return Response({'success': False, 'errors': {'cpf': "Este CPF já está em uso."}}, status=status.HTTP_400_BAD_REQUEST)
 
-        # Criar o usuário no Django
+      
         user = User.objects.create_user(
         username=data['cpf'],
         email=data['email'],
