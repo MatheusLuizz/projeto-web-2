@@ -20,6 +20,7 @@ const Income = () => {
   const [dateError, setDateError] = useState('');
 
   useEffect(() => {
+    const storedCpf = localStorage.getItem("authenticatedUser");
     const fetchIncomeData = async () => {
       try {
         const response = await fetch('http://localhost:8000/ganhos/');

@@ -19,6 +19,7 @@ const Expenses = () => {
   const [dateError, setDateError] = useState('');
 
   useEffect(() => {
+    const storedCpf = localStorage.getItem("authenticatedUser");
     const fetchExpensesData = async () => {
       try {
         const response = await fetch('http://localhost:8000/gastos/');
