@@ -1,10 +1,13 @@
 from rest_framework.decorators import api_view
 from rest_framework import status
 from django.contrib.auth.models import User
+from django.utils import timezone
 # from django.shortcuts import render
 from rest_framework.permissions import IsAuthenticated
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse, HttpResponseNotAllowed
 from rest_framework import viewsets, permissions
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework.decorators import action
 from .models import *
 from .serializers import *
 from rest_framework.response import Response
@@ -14,13 +17,13 @@ from django.contrib.auth import authenticate
 from django.contrib.auth import authenticate
 from rest_framework import generics
 from .models import CustomUser
-from .serializers import UserSerializer
 from rest_framework.exceptions import ValidationError
 from rest_framework.serializers import Serializer, CharField, EmailField
 from datetime import datetime, timedelta
 from django.http import JsonResponse
 from django.views.decorators.http import require_GET
 from django.db.models import Sum, Min
+import json
 
 
 
@@ -105,44 +108,6 @@ class ProjectViewSet(viewsets.ViewSet):
         project = self.queryset.get(pk=pk)
         project.delete()
         return Response(status=204)
-
-class UserViewSet(viewsets.ViewSet):
-
-    permission_classes = [permissions.AllowAny] 
-    queryset = Usuario.objects.all()
-    serializer_class = UsuarioSerializer
-    
-    def list(self, request):
-        queryset = self.queryset
-        serializer = self.serializer_class(queryset, many=True)
-        return Response(serializer.data)
-    
-    def create(self, request):
-        serializer = self.serializer_class(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        else:
-            return Response(serializer.errors, status=400)    
-    
-    def retrieve(self, request, pk=None):
-        project = self.queryset.get(pk=pk)
-        serializer = self.serializer_class(project)
-        return Response(serializer.data)
-    
-    def update(self, request, pk=None):
-        project = self.queryset.get(pk=pk)
-        serializer = self.serializer_class(project, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        else:
-            return Response(serializer.errors, status=400)
-    
-    def destroy(self, request, pk=None):
-        project = self.queryset.get(pk=pk)
-        project.delete()
-        return Response(status=204)
     
 class GanhoViewSet(viewsets.ViewSet):
 
@@ -220,17 +185,6 @@ class GastoViewSet(viewsets.ViewSet):
         project.delete()
         return Response(status=204)
     
-    
-# -----------------------
-
-
-class RegisterUserView(generics.CreateAPIView):
-    queryset = CustomUser.objects.all()
-    serializer_class = UserSerializer
-
-
-# ----------------------
-
 @api_view(['POST'])
 def login_view(request):
     username = request.data.get('username')
@@ -248,35 +202,40 @@ def login_view(request):
 
     # ______________
 
-class RegisterSerializer(Serializer):
-    username = CharField(required=True, max_length=150)
-    email = EmailField(required=True)
-    password = CharField(required=True, max_length=128)
-
-    def validate(self, data):
-        # Verificar se o nome de usuário já existe
-        if User.objects.filter(username=data['username']).exists():
-            raise ValidationError("Username already exists")
-        return data
-
-    def create(self, validated_data):
-        # Criação do usuário
-        user = User.objects.create_user(
-            username=validated_data['username'],
-            email=validated_data['email'],
-            password=validated_data['password']
-        )
-        return user
-
 @api_view(['POST'])
-def register_view(request):
+def register(request):
     serializer = RegisterSerializer(data=request.data)
-
+    
     if serializer.is_valid():
-        serializer.save()
-        return Response({'success': True, 'message': 'User registered successfully'})
-    else:
-        return Response({'success': False, 'message': serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+        data = serializer.validated_data
+
+        # Validar senha
+        if data['password'] != data['confirm_password']:
+            return Response({'success': False, 'errors': {'confirm_password': "As senhas não coincidem."}}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Verificar se o CPF já está em uso
+        if User.objects.filter(username=data['cpf']).exists():
+            return Response({'success': False, 'errors': {'cpf': "Este CPF já está em uso."}}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Criar o usuário no Django
+        user = User.objects.create_user(
+        username=data['cpf'],
+        email=data['email'],
+        password=data['password']
+        )
+        
+        Usuario.objects.create(
+            cpf=data['cpf'],
+            nome=data['nome'],
+            email=data['email'],
+            telefone=data['telefone'],
+            faturamento=0.0,  
+            criacao_conta=timezone.now().date()
+        )
+        
+        return Response({'success': True, 'message': 'Usuário registrado com sucesso!'}, status=status.HTTP_201_CREATED)
+    
+    return Response({'success': False, 'errors': serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
 class calendarListView(viewsets.ViewSet):
     def get(self, request, cpf):
@@ -293,3 +252,24 @@ class calendarListView(viewsets.ViewSet):
 
         return Response(data)
     
+class TransacaoViewSet(viewsets.ViewSet):
+
+    @action(detail=False, methods=['post'])
+    def excluir(self, request):
+        try:
+            data = request.data.get('data')
+            nome_atividade = request.data.get('nome_atividade')
+            descricao = request.data.get('descricao')
+            valor = request.data.get('valor')
+            tipo = request.data.get('tipo')
+
+            if tipo == 'Receita':
+                Ganho.objects.filter(data=data, nome_atividade=nome_atividade, descricao=descricao, valor=valor).delete()
+            elif tipo == 'Gasto':
+                Gasto.objects.filter(data=data, nome_atividade=nome_atividade, descricao=descricao, valor=valor).delete()
+            else:
+                return Response({'error': 'Tipo de transação inválido'}, status=400)
+
+            return Response({'status': 'Transação excluída com sucesso'})
+        except Exception as e:
+            return Response({'error': str(e)}, status=500)

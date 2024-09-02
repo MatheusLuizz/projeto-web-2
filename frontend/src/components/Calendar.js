@@ -7,11 +7,11 @@ const Calendar = () => {
   const [selectedRow, setSelectedRow] = useState(null);
 
   useEffect(() => {
-    const cpf = '55555555555'; // Aqui você deve usar o CPF do usuário logado
-    fetch(`http://localhost:8000/calendario/${cpf}/`)
+    const storedCpf = localStorage.getItem("authenticatedUser");
+    fetch(`http://localhost:8000/calendario/${storedCpf}/`)
       .then(response => response.json())
       .then(data => {
-        // Combina os ganhos e gastos em um único array
+       
         const todasTransacoes = [
           ...data.ganhos.map(ganho => ({ ...ganho, tipo: 'Receita' })),
           ...data.gastos.map(gasto => ({ ...gasto, tipo: 'Gasto' }))
@@ -23,12 +23,33 @@ const Calendar = () => {
   }, []);
 
   const handleDelete = (index) => {
-    // Cria um novo array sem a transação selecionada
-    const newTransacoes = [...transacoes];
-    newTransacoes.splice(index, 1);
-    setTransacoes(newTransacoes);
-    setSelectedRow(null); // Limpa a seleção após a exclusão
-    calcularTotais(newTransacoes);
+    const transacaoParaDeletar = transacoes[index];
+  
+    fetch(`http://localhost:8000/calendario/excluir/`, {
+      method: 'POST', // Certifique-se de que o método está em maiúsculas
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        data: transacaoParaDeletar.data,
+        nome_atividade: transacaoParaDeletar.nome_atividade,
+        descricao: transacaoParaDeletar.descricao,
+        valor: transacaoParaDeletar.valor,
+        tipo: transacaoParaDeletar.tipo
+      }),
+    })
+    .then(response => {
+      if (response.ok) {
+        const newTransacoes = [...transacoes];
+        newTransacoes.splice(index, 1);
+        setTransacoes(newTransacoes);
+        setSelectedRow(null); 
+        calcularTotais(newTransacoes);
+      } else {
+        console.error('Failed to delete the item.');
+      }
+    })
+    .catch(error => console.error('Error deleting item:', error));
   };
 
   const calcularTotais = (transacoes) => {
