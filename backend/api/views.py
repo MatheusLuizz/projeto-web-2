@@ -108,7 +108,7 @@ class ProjectViewSet(viewsets.ViewSet):
     
 class GanhoViewSet(viewsets.ViewSet):
 
-    permission_classes = [permissions.AllowAny] 
+    permission_classes = [permissions.AllowAny]
     queryset = Ganho.objects.all()
     serializer_class = GanhoSerializer
     
@@ -121,18 +121,19 @@ class GanhoViewSet(viewsets.ViewSet):
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
-            return Response(serializer.errors, status=400)    
+            print("Validation errors:", serializer.errors)  # Adicionando log para erros de validação
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)   
     
     def retrieve(self, request, pk=None):
-        project = self.queryset.get(pk=pk)
-        serializer = self.serializer_class(project)
+        ganho = self.queryset.get(pk=pk)
+        serializer = self.serializer_class(ganho)
         return Response(serializer.data)
     
     def update(self, request, pk=None):
-        project = self.queryset.get(pk=pk)
-        serializer = self.serializer_class(project, data=request.data)
+        ganho = self.queryset.get(pk=pk)
+        serializer = self.serializer_class(ganho, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
@@ -140,13 +141,13 @@ class GanhoViewSet(viewsets.ViewSet):
             return Response(serializer.errors, status=400)
     
     def destroy(self, request, pk=None):
-        project = self.queryset.get(pk=pk)
-        project.delete()
+        ganho = self.queryset.get(pk=pk)
+        ganho.delete()
         return Response(status=204)
 
 class GastoViewSet(viewsets.ViewSet):
 
-    permission_classes = [permissions.AllowAny] 
+    permission_classes = [permissions.AllowAny]
     queryset = Gasto.objects.all()
     serializer_class = GastoSerializer
     
@@ -164,13 +165,13 @@ class GastoViewSet(viewsets.ViewSet):
             return Response(serializer.errors, status=400)    
     
     def retrieve(self, request, pk=None):
-        project = self.queryset.get(pk=pk)
-        serializer = self.serializer_class(project)
+        gasto = self.queryset.get(pk=pk)
+        serializer = self.serializer_class(gasto)
         return Response(serializer.data)
     
     def update(self, request, pk=None):
-        project = self.queryset.get(pk=pk)
-        serializer = self.serializer_class(project, data=request.data)
+        gasto = self.queryset.get(pk=pk)
+        serializer = self.serializer_class(gasto, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
@@ -178,8 +179,8 @@ class GastoViewSet(viewsets.ViewSet):
             return Response(serializer.errors, status=400)
     
     def destroy(self, request, pk=None):
-        project = self.queryset.get(pk=pk)
-        project.delete()
+        gasto = self.queryset.get(pk=pk)
+        gasto.delete()
         return Response(status=204)
     
 @api_view(['POST'])

@@ -23,12 +23,19 @@ class RegisterSerializer(serializers.Serializer):
 class GanhoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ganho
-        fields = ('cliente_cpf', 'nome_atividade', 'tipo_atividade', 'valor', 'data', 'descricao', 'recorrencia')
+        fields = ('nome_atividade', 'tipo_atividade', 'valor', 'data', 'descricao', 'recorrencia', 'cliente_cpf')
+        extra_kwargs = {
+            'cliente_cpf': {'required': False},
+            'recorrencia': {'required': False}
+        }
 
 class GastoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Gasto
         fields = ('cliente_cpf', 'nome_atividade', 'tipo_atividade', 'valor', 'data', 'descricao')
+        extra_kwargs = {
+            'cliente_cpf': {'required': False}
+        }
 
 class CalendarGanhoSerializer(serializers.ModelSerializer):
     class Meta:
