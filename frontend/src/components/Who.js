@@ -4,7 +4,7 @@ const images = [
   { src: "./Who-Adriel.png", title: "Adriel Leite" },
   { src: "/Who-Hilda.png", title: "Hilda Miranda" },
   { src: "/Who-Kamila.png", title: "Kamila Rocha" },
-  { src: "/Who-Matheus.png", title: "Matheus Luis" },
+  { src: "/Who-Matheus.png", title: "Matheus Luiz" },
   { src: "/Who-Murilo.png", title: "Murilo Alves" },
 ];
 

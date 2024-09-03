@@ -31,51 +31,53 @@ function Register() {
 
   const handleRegister = async (e) => {
     e.preventDefault();
-    setIsClicked(true); 
+    setIsClicked(true);
 
     if (!validateForm()) {
-      setIsClicked(false); 
-      return;
+        setIsClicked(false);
+        return;
     }
 
     try {
-      const response = await fetch("http://localhost:8000/api/register/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          cpf: cpf,
-          nome: nome,
-          email: email,
-          password: password,
-          telefone: telefone,
-        }),
-      });
+        const response = await fetch(`http://localhost:8000/api/register/`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                cpf: cpf,
+                nome: nome,
+                email: email,
+                telefone: telefone,
+                password: password,
+                confirm_password: confirmPassword, 
+            }),
+        });
 
-      const data = await response.json();
+        const data = await response.json();
 
-      if (data.success) {
-        alert("Registro realizado com sucesso!");
-       
-        setCpf("");
-        setNome("");
-        setEmail("");
-        setConfirmEmail("");
-        setPassword("");
-        setConfirmPassword("");
-        setTelefone("");
-        setErrors({});
-      } else {
-        setErrors(data.errors);
-      }
+        if (data.success) {
+            alert("Registro realizado com sucesso!");
+
+            setCpf("");
+            setNome("");
+            setEmail("");
+            setConfirmEmail("");
+            setPassword("");
+            setConfirmPassword("");
+            setTelefone("");
+            setErrors({});
+        } else {
+            setErrors(data.errors);
+        }
     } catch (error) {
-      console.error("Erro ao registrar:", error);
-      alert("Ocorreu um erro ao tentar registrar.");
+        console.error("Erro ao registrar:", error);
+        alert("Ocorreu um erro ao tentar registrar.");
     } finally {
-      setIsClicked(false); 
+        setIsClicked(false);
     }
-  };
+};
+
 
   const containerStyle = {
     display: "flex",

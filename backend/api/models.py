@@ -26,20 +26,20 @@ class Usuario(models.Model):
 
 
 class Ganho(models.Model):
-    cliente_cpf = models.ForeignKey(Usuario, on_delete=models.CASCADE)
+    cliente_cpf = models.ForeignKey(Usuario, on_delete=models.CASCADE, null=True, blank=True)
     nome_atividade = models.CharField(max_length=255)
     tipo_atividade = models.CharField(max_length=255)
     valor = models.FloatField()
     data = models.DateField()
     descricao = models.CharField(max_length=500)
-    recorrencia = models.CharField(max_length=255)
+    recorrencia = models.CharField(max_length=255, blank=True, null=True)
 
     def __str__(self):
         return self.nome_atividade
 
 
 class Gasto(models.Model):
-    cliente_cpf = models.ForeignKey(Usuario, on_delete=models.CASCADE)
+    cliente_cpf = models.ForeignKey(Usuario, on_delete=models.CASCADE, null=True, blank=True)
     nome_atividade = models.CharField(max_length=255)
     tipo_atividade = models.CharField(max_length=255)
     valor = models.FloatField()
