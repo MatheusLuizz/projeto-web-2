@@ -28,14 +28,14 @@ jobs:
           cd backend
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-        
+
       - name: Zip artifact for deployment
         run: |
           zip -r release.zip . # Zip all files in the backend directory
 
       - name: List files after zipping
         run: |
-          ls -lh # List files in the backend directory to confirm release.zip
+          ls -lh # List files to confirm release.zip is created
 
       - name: Upload artifact for deployment jobs
         uses: actions/upload-artifact@v4
@@ -50,7 +50,7 @@ jobs:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
-      id-token: write #This is required for requesting the JWT
+      id-token: write # This is required for requesting the JWT
 
     steps:
       - name: Download artifact from build job
@@ -65,7 +65,7 @@ jobs:
       - name: Unzip artifact for deployment
         run: |
           mkdir -p deployment
-          unzip python-app/release.zip -d deployment # Unzip into the deployment directory
+          unzip release.zip -d deployment # Unzip into the deployment directory
 
       - name: List files after unzipping
         run: |
