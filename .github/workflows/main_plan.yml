@@ -35,14 +35,13 @@ jobs:
 
       - name: List files after zipping
         run: |
-          cd backend
           ls -lh # List files in the backend directory to confirm release.zip
 
       - name: Upload artifact for deployment jobs
         uses: actions/upload-artifact@v4
         with:
           name: python-app
-          path: backend/release.zip # Path to the zip file
+          path: release.zip # Path to the zip file
 
   deploy:
     runs-on: ubuntu-latest
