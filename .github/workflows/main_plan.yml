@@ -31,7 +31,6 @@ jobs:
         
       - name: Zip artifact for deployment
         run: |
-          cd backend
           zip -r release.zip . # Zip all files in the backend directory
 
       - name: List files after zipping
