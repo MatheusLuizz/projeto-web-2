@@ -18,9 +18,9 @@ import MenuIcon from "@mui/icons-material/Menu";
 import HomeIcon from "@mui/icons-material/Home";
 import MoneyOffIcon from "@mui/icons-material/MoneyOff";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
-import AddIcon from "@mui/icons-material/Add";
 import InsightsIcon from "@mui/icons-material/Insights";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import LogoutIcon from "@mui/icons-material/Logout"; // Ícone para o botão de logout
 
 export default function NavBar(props) {
   const { drawerWidth, content, onLogout } = props; // Recebe a função de logout como prop
@@ -83,18 +83,6 @@ export default function NavBar(props) {
           <ListItem disablePadding>
             <ListItemButton
               component={Link}
-              to="/criar"
-              selected={"/criar" === path}
-            >
-              <ListItemIcon>
-                <AddIcon style={{ color: "white" }} />
-              </ListItemIcon>
-              <ListItemText primary={"Criar"} />
-            </ListItemButton>
-          </ListItem>
-          <ListItem disablePadding>
-            <ListItemButton
-              component={Link}
               to="/dashboard"
               selected={"/dashboard" === path}
             >
@@ -114,6 +102,15 @@ export default function NavBar(props) {
                 <CalendarMonthIcon style={{ color: "white" }} />
               </ListItemIcon>
               <ListItemText primary={"Calendário"} />
+            </ListItemButton>
+          </ListItem>
+          {/* Botão de Logout movido para o final */}
+          <ListItem disablePadding>
+            <ListItemButton onClick={handleLogout}>
+              <ListItemIcon>
+                <LogoutIcon style={{ color: "white" }} />
+              </ListItemIcon>
+              <ListItemText primary={"Deslogar"} />
             </ListItemButton>
           </ListItem>
         </List>
@@ -140,25 +137,14 @@ export default function NavBar(props) {
           >
             <MenuIcon />
           </IconButton>
-
-          <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
+          <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 0 }}>
             <img
               src="./logo-plan-header.png"
               alt="Logo"
-              style={{ height: 40}}
+              style={{ height: 40 }}
             />
           </Typography>
-          <button
-            onClick={handleLogout}
-            style={{
-              color: "white",
-              backgroundColor: "transparent",
-              border: "none",
-              cursor: "pointer",
-            }}
-          >
-            Deslogar
-          </button>
+          <Box sx={{ flexGrow: 1 }} /> {/* Espaço flexível */}
         </Toolbar>
       </AppBar>
 
@@ -202,4 +188,3 @@ export default function NavBar(props) {
     </Box>
   );
 }
-

@@ -6,12 +6,19 @@ const Calendar = () => {
   const [despesas, setDespesas] = useState(0);
   const [selectedRow, setSelectedRow] = useState(null);
 
+  const formatarData = (dataISO) => {
+    const data = new Date(dataISO);
+    const timezoneOffset = data.getTimezoneOffset() * 60000;
+    const dataAjustada = new Date(data.getTime() + timezoneOffset);
+    return dataAjustada.toLocaleDateString('pt-BR');
+  };
+
   useEffect(() => {
-    const cpf = '55555555555'; // Aqui você deve usar o CPF do usuário logado
-    fetch(`http://localhost:8000/calendario/${cpf}/`)
+    const storedCpf = localStorage.getItem("authenticatedUser");
+    fetch(`http://localhost:8000/calendario/${storedCpf}/`)
       .then(response => response.json())
       .then(data => {
-        // Combina os ganhos e gastos em um único array
+       
         const todasTransacoes = [
           ...data.ganhos.map(ganho => ({ ...ganho, tipo: 'Receita' })),
           ...data.gastos.map(gasto => ({ ...gasto, tipo: 'Gasto' }))
@@ -23,12 +30,33 @@ const Calendar = () => {
   }, []);
 
   const handleDelete = (index) => {
-    // Cria um novo array sem a transação selecionada
-    const newTransacoes = [...transacoes];
-    newTransacoes.splice(index, 1);
-    setTransacoes(newTransacoes);
-    setSelectedRow(null); // Limpa a seleção após a exclusão
-    calcularTotais(newTransacoes);
+    const transacaoParaDeletar = transacoes[index];
+  
+    fetch(`http://localhost:8000/calendar/excluir/`, {
+      method: 'POST', 
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        data: transacaoParaDeletar.data,
+        nome_atividade: transacaoParaDeletar.nome_atividade,
+        descricao: transacaoParaDeletar.descricao,
+        valor: transacaoParaDeletar.valor,
+        tipo: transacaoParaDeletar.tipo
+      }),
+    })
+    .then(response => {
+      if (response.ok) {
+        const newTransacoes = [...transacoes];
+        newTransacoes.splice(index, 1);
+        setTransacoes(newTransacoes);
+        setSelectedRow(null); 
+        calcularTotais(newTransacoes);
+      } else {
+        console.error('Failed to delete the item.');
+      }
+    })
+    .catch(error => console.error('Error deleting item:', error));
   };
 
   const calcularTotais = (transacoes) => {
@@ -70,7 +98,7 @@ const Calendar = () => {
           <tbody>
             {transacoes.map((transacao, index) => (
               <tr key={index} className={index === selectedRow ? 'selected' : ''}>
-               <td>{new Date(transacao.data).toLocaleDateString('pt-BR')}</td>
+               <td>{formatarData(transacao.data)}</td>
                 <td>{transacao.nome_atividade}</td>
                 <td>{transacao.descricao}</td>
                 <td>{parseFloat(transacao.valor).toFixed(2).replace('.', ',')}</td>

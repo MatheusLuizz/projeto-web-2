@@ -42,6 +42,7 @@ function Login({ onLogin }) {
       const data = await response.json();
 
       if (data.success) {
+        localStorage.setItem("authenticatedUser", username);
         onLogin();
         navigate("/home");
       } else {

@@ -52,70 +52,67 @@ html, body {
 }
 
 
-.calendar_up{
-
-  display: flex;
-  align-items: center;
- 
-  
-}
-
-.calendar_title{
-  font-family: "roboto", sans-serif;
-  font-size: 15px;
-  color: #000a32;
-  margin-left: 20px;
-}
-
-.calendar_balance{
-  margin-left: 300px;
-  font-size: 20px;
-}
-
 .calendar_table {
-  margin: 20px;
-  font-family: 'roboto', sans-serif;
+  max-width: 900px;
+  margin: auto;
 }
 
 .styled-table {
-  border-collapse: collapse;
   width: 100%;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.styled-table thead tr {
-  background-color: #000a32;
-  color: #ffffff;
+  border-collapse: collapse;
   text-align: left;
-  font-weight: bold;
 }
 
-.styled-table th,
-.styled-table td {
-  padding: 12px 15px;
+.styled-table th, .styled-table td {
+  padding: 15px;
   border: 1px solid #ddd;
 }
 
-.styled-table tbody tr {
-  border-bottom: 1px solid #dddddd;
+.styled-table th {
+  background-color: #000a32;
+  color: white;
+  font-weight: bold;
+  text-transform: uppercase;
 }
 
-.styled-table tbody tr:nth-of-type(even) {
-  background-color: #f3f3f3;
+.styled-table tbody tr {
+  transition: background-color 0.3s;
+}
+
+.styled-table tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
 }
 
 .styled-table tbody tr:hover {
-  background-color: #f1f1f1;
-  cursor: pointer;
+  background-color: #d9f2d9;
 }
 
 .styled-table tbody tr.selected {
-  background-color: #76c7c0;
-  color: white;
+  background-color: #c6ffdd;
 }
 
-.styled-table tbody tr:last-of-type {
-  border-bottom: 2px solid #00c85a;
+.styled-table td {
+  vertical-align: middle;
+  color: #333;
+}
+
+.styled-table td:first-child {
+  font-weight: bold;
+  color: #2c3e50;
+  width: 15%;
+}
+
+.styled-table button {
+  padding: 5px 10px;
+  background-color: #ff4d4f;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+.styled-table button:hover {
+  background-color: #ff7875;
 }
 
 
