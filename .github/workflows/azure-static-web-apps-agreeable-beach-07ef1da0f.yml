@@ -26,8 +26,7 @@ jobs:
       - name: Install Dependencies
         run: |
           cd frontend
-          npm install --legacy-peer-deps # Força a instalação de dependências mesmo com conflitos
-          npm list # Lista as dependências instaladas para verificação
+          npm install --force # Força a instalação de dependências mesmo com conflitos
       - name: Build
         run: |
           cd frontend
